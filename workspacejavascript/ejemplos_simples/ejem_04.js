@@ -41,12 +41,24 @@ console.log(coche1.caracteristicas.num_puertas)
 
 let producto1 = {
     modelo: 'pera',
-    color: 'verde',
-    categoria: {
-        tipo_alimento: 'fruta',
-        esFresca: true
+    info: {
+        caducidad: '01/11/2026',
+        peso: 1
     }
 }
 
 
-console.table(producto1)
+let producto2 = producto1
+
+producto1.nombre = 'Jose'
+
+console.log(producto1.nombre)
+console.log(producto2.nombre)
+
+let producto3 = { ...producto1 }
+
+producto3.nombre = 'Fresa'
+
+console.log(producto1.nombre) // Va a salir Jose
+console.log(producto2.nombre) // Jose de nuevo
+console.log(producto3.nombre) // Fresa
