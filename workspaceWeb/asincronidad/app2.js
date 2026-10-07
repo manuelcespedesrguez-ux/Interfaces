@@ -1,32 +1,27 @@
 const form = document.querySelector('#form')
-const input = document.querySelector('#nombre')
+const pais = document.querySelector('#pais') 
 const resultado = document.querySelector('#resultado')
 
-form.addEventListener('submit', buscarPais)
+form.addEventListener('submit', buscarPaisPromesas)
 
-function buscarPais(event) {
-    event.preventDefault()
+function buscarPaisPromesas(event) {
+    event.preventDefault();
+    const API = 'https://api.restcountries.com/countries/v5?q='
+    const API_KEY = 'rc_live_77cfeed35e524f91b87b6eafa53f68a7'
 
-    const nombre = input.value.trim().toLowerCase()
-    if (!nombre) return
+    if(!pais.value) return 
 
-    fetch(`https://api.restcountries.com/countries/v5?q=${nombre}`,
-        { headers: { 'Authorization': 'rc_live_77cfeed35e524f91b87b6eafa53f68a7' } })
-        .then((response) => {
-            if (!response.ok) throw new Error(response.status)
-            return response.json()
-        })
-        .then(respuesta => {
-            const pais = respuesta.data.objects[0]
-            resultado.innerHTML = `
-                <img src="${pais.flag.url_svg}" width="80" alt="Bandera de ${pais.names.common}" />
-                <h2>${pais.names.common}</h2>
-                <h3>Capital: ${pais.capitals[0].name}</h3>
-                <p>Población: ${pais.population.toLocaleString('es-ES')}</p>
-            `
-        })
-        .catch((error) => {
-            console.error(error)
-            resultado.innerHTML = '<p>País no encontrado</p>'
-        })
+    fetch(
+        API + pais.value,
+        { headers: {'Authorization': 'Bearer ' + API_KEY } }
+    )
+    .then( response => response.json() ) 
+    .then( info => {
+        console.log(info);
+        resultado.innerHTML = `
+        <p>${info.data.objects[0].capitals[0].name}</p>
+        <img src="${info.data.objects[0].flag.url_svg}"/>
+        `
+    })
+    .catch(error => console.log('Error al consultar el país: ' + error));
 }
