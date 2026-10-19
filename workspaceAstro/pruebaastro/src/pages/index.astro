@@ -1,11 +1,32 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Button from "../components/Button.astro";
+import Card from "../components/Card.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const nombre = 'Manuel';
+const hobbiesManuel = [
+    "Dormir",
+    "Salir",
+    "Entrenar",
+    "Jugar"
+];
+
+const hobbies= [
+    "Tirar del pelo",
+    "Retocarse la cara",
+    "Jugar"
+];
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout>
+    <h1>Mi primera página de astro</h1>
+    <p>Yo me llamo {nombre}</p>
+	<p>Mis hobbies son:</p>
+    <ul>
+        {hobbiesManuel.map((hobbie) => <li>{hobbie}</li>)}
+    </ul>
+    <Button title="Púlsame">Púlsame</Button>
+    <Card title="Este es Macaco" description="Estos son los hobbies de macaco" img="https://i.pinimg.com/736x/c0/39/6c/c0396cbd3f4276ddaf52d0ba12341ba6.jpg"
+  hobbies={hobbies}
+/>
+</BaseLayout>
