@@ -1,0 +1,4 @@
+colorama==0.4.6
+numpy==2.5.4
+pillow==12.3.0
+qrcode==8.2
