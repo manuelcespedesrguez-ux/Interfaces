@@ -18,6 +18,8 @@
     "esbuild": true
   },
   "devDependencies": {
-    "@bruits/satteri-win32-x64-msvc": "^0.10.5"
+    "@bruits/satteri-win32-x64-msvc": "^0.10.5",
+    "@tailwindcss/vite": "^4.3.3",
+    "tailwindcss": "^4.3.3"
   }
 }
