@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-export default function ContadorReact() {
+export default function ContadorReact(){
     const [contador, setContador] = useState(0);
 
-    let incrementar = () => {
-        setContador(contador + 1);
+    let incrementar = () =>{
+        setContador(contador + 1)
     }
 
     return <div>
