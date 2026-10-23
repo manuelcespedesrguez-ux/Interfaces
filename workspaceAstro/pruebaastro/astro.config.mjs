@@ -5,11 +5,17 @@ import tailwindcss from '@tailwindcss/vite';
 
 import react from '@astrojs/react';
 
+
+
 export default defineConfig({
   server: {
     host: true,
     allowedHosts: true
   },
+
+  vite: {
+    plugins: [tailwindcss()]
+  }, 
 
   integrations: [react()]
 });
