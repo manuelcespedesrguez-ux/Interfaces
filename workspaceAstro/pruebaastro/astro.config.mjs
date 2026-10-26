@@ -7,6 +7,10 @@ import react from '@astrojs/react';
 
 
 
+import mdx from '@astrojs/mdx';
+
+
+
 export default defineConfig({
   server: {
     host: true,
@@ -17,5 +21,5 @@ export default defineConfig({
     plugins: [tailwindcss()]
   }, 
 
-  integrations: [react()]
+  integrations: [react(), mdx()]
 });

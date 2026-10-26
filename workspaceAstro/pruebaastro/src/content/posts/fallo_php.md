@@ -5,4 +5,4 @@ fecha: "2026-10-23"
 tags: ["fallo", "seguridad"]
 ---
 
-Fallo global del codigo php y deshabilitaciones de páginas.
+Fallo global del código php y deshabilitaciones de páginas.
