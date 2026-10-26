@@ -2,6 +2,7 @@
 import { render } from "astro:content";
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import StarRating from "../../components/StarRating.astro";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
@@ -19,5 +20,7 @@ const { Content } = await render(project);
 <h1>Detalle del proyecto</h1>
 <h2>{project.data.titulo}</h2>
 <p>{project.data.fecha} - {project.data.autor}</p>
+
+<StarRating projectId={project.id}/>
 <Content />
 </BaseLayout>

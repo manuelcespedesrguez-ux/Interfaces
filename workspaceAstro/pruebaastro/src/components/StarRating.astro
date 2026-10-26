@@ -1,0 +1,118 @@
+---
+// src/components/StarRating.astro
+interface Props {
+    projectId: string;
+}
+
+const { projectId } = Astro.props;
+---
+
+<div class="star-rating" data-project-id={projectId}>
+  <span class="rating-label">Valoración:</span>
+  <div class="stars">
+    <button type="button" class="star" data-value="1" aria-label="1 estrella">★</button>
+    <button type="button" class="star" data-value="2" aria-label="2 estrellas">★</button>
+    <button type="button" class="star" data-value="3" aria-label="3 estrellas">★</button>
+    <button type="button" class="star" data-value="4" aria-label="4 estrellas">★</button>
+    <button type="button" class="star" data-value="5" aria-label="5 estrellas">★</button>
+  </div>
+  <span class="rating-text">Sin valorar</span>
+</div>
+
+<style>
+  .star-rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 1rem 0;
+    font-size: 1.1rem;
+  }
+  .stars {
+    display: flex;
+    gap: 4px;
+  }
+  .star {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.1s ease;
+    padding: 0;
+  }
+  .star:hover {
+    transform: scale(1.15);
+  }
+  .star.active {
+    color: #f59e0b; /* Color dorado */
+  }
+  .rating-text {
+    font-size: 0.9rem;
+    color: #666;
+  }
+</style>
+
+<script>
+  // Script que se ejecuta en el navegador (Client-side)
+  document.addEventListener('astro:page-load', initStarRatings);
+  document.addEventListener('DOMContentLoaded', initStarRatings);
+
+  function initStarRatings() {
+    const ratingContainers = document.querySelectorAll('.star-rating');
+
+    ratingContainers.forEach((container) => {
+      const projectId = container.getAttribute('data-project-id');
+      if (!projectId) return;
+
+      const stars = container.querySelectorAll('.star');
+      const textSpan = container.querySelector('.rating-text');
+      const storageKey = `rating_${projectId}`;
+
+      // 1. Cargar valor previo guardado en localStorage
+      const savedRating = localStorage.getItem(storageKey);
+      if (savedRating) {
+        updateStars(Number(savedRating));
+      }
+
+      // 2. Eventos de click para seleccionar estrellas
+      stars.forEach((star) => {
+        star.addEventListener('click', () => {
+          const value = Number(star.getAttribute('data-value'));
+          localStorage.setItem(storageKey, value.toString());
+          updateStars(value);
+        });
+
+        // Efecto hover (vista previa)
+        star.addEventListener('mouseenter', () => {
+          const value = Number(star.getAttribute('data-value'));
+          highlightStars(value);
+        });
+      });
+
+      // Restaurar estado al quitar el ratón del contenedor
+      const starsDiv = container.querySelector('.stars');
+      starsDiv?.addEventListener('mouseleave', () => {
+        const currentRating = localStorage.getItem(storageKey);
+        updateStars(currentRating ? Number(currentRating) : 0);
+      });
+
+      function highlightStars(rating: number) {
+        stars.forEach((star) => {
+          const val = Number(star.getAttribute('data-value'));
+          if (val <= rating) {
+            star.classList.add('active');
+          } else {
+            star.classList.remove('active');
+          }
+        });
+      }
+
+      function updateStars(rating: number) {
+        highlightStars(rating);
+        if (textSpan) {
+          textSpan.textContent = rating > 0 ? `(${rating} / 5 estrellas)` : 'Sin valorar';
+        }
+      }
+    });
+  }
+</script>
