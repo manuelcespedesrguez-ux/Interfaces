@@ -1,0 +1,13 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const res = await fetch("https://api.coinpaprika.com/v1/tickers/btc-bitcoin")
+const datos = await res.json()
+const precioBitcoin = datos.quotes.USD.price
+const precioBTCFormateado = precioBitcoin.toFixed(2)
+---
+
+<BaseLayout>
+    <h1>Precio de Bitcoin</h1>
+    <p>1 BTC = { precioBTCFormateado }$</p>
+</BaseLayout>
