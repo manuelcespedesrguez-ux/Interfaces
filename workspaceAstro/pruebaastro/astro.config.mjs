@@ -11,6 +11,10 @@ import mdx from '@astrojs/mdx';
 
 
 
+import vercel from '@astrojs/vercel';
+
+
+
 export default defineConfig({
   server: {
     host: true,
@@ -19,7 +23,8 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()]
-  }, 
+  },
 
-  integrations: [react(), mdx()]
+  integrations: [react(), mdx()],
+  adapter: vercel()
 });
