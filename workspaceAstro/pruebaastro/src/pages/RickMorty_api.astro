@@ -17,7 +17,7 @@ const personajes = datos.results
     <h1>Personajes de Rick and Morty</h1>
     
     <div class="grid-container">
-        {personajes.map((personaje) => (
+        {personajes.map((personaje: any) => (
             <Card 
                 title= {personaje.name}
                 img= {personaje.image}
