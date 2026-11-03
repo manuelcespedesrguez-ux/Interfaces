@@ -2,7 +2,7 @@ services:
   mysql_astro:
     image: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD:?Te falta la variable de entorno MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Te falta la variable de entorno MYSQL_ROOT_PASSWORD}
     ports:
       - "${MYSQL_PORT:-3306}:3306"
     volumes:

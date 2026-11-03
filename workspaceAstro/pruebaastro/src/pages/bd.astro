@@ -1,3 +1,109 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {getAllProducts} from '../lib/db.js';
+export const prerender = false; // Convertimos en SSR
 
+let error = false;
+let productos = [];
+try{
+    productos = await getAllProducts();
+} catch(error){
+    console.log("No se pueden obtener los productos");
+    error = true;
+    Astro.response.status = 503;
+}
 
+---
+
+<BaseLayout>
 <h1>Lista de productos guardados en BD</h1>
+   <div>
+    <table>
+        <thead>
+            <tr> 
+            <th>ID</th>
+            <th>NOMBRE</th>
+            <th>PRECIO</th>
+            <th>STOCK</th>
+            </tr>
+        </thead>
+        <tbody>
+            {productos.map(producto => (
+            <tr>
+                <td>{producto.id}</td>
+                <td>{producto.nombre}</td>
+                <td>{producto.precio}</td>
+                <td>{producto.stock}</td>
+                <td>
+                    <button class="btn-Borrar" data-id={producto.id}>Borrar producto</button>
+                </td>
+            </tr>
+            ))}
+      </tbody>
+    </table>
+</div>
+</BaseLayout>
+
+<script>
+    document.querySelectorAll('.btn-Borrar').forEach(button => {
+        button.addEventListener('click', async (e) => {
+            const target = e.target as HTMLButtonElement
+            const id = target.dataset.id
+
+            if(confirm(`¿Estás seguro de borrar el producto con ID => ${id}?`)){
+                const res = await fetch(`/api/productos/${id}`, {method: 'DELETE'})
+                if(res.ok) {
+                    window.location.reload() 
+                } else {
+                    alert('Ha ocurrido un error durante el borrado')
+                }
+            }
+        })
+    })
+</script>
+
+<style>
+    h1 {
+        font-size: 1.8rem;
+        font-family: sans-serif;
+
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f8fafc;
+        color: #475569;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 14px 16px;
+        border-bottom: 4px solid #e2e8f0;
+    }
+
+    td {
+        padding: 14px 16px;
+        color: #334155;
+        border-bottom: 3px solid #f1f5f9;
+        font-size: 0.95rem;
+    }
+
+    .btn-Borrar {
+        background-color: red;
+        color: white;
+        border: 1px solid red;
+        padding: 6px 14px;
+        font-family: sans-serif;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+    }
+</style>
