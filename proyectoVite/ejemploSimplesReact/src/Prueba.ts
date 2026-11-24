@@ -170,3 +170,133 @@ function matar(cosa: Animal) {
     cosa.morir()
 }
 matar(new Gaviota())
+
+
+interface Usuario{
+    nombre: string,
+    edad: number
+}
+
+interface Empleado {
+    salario: number, 
+    puesto: string
+}
+
+type UsuarioEmpleado = Usuario & Empleado
+
+const jose: UsuarioEmpleado = {
+    nombre: "Jose",
+    edad: 20,
+    salario: 2000,
+    puesto: "Admin"
+}
+
+console.log(jose)
+
+
+
+interface Personal {
+    id:number,
+    nombre: string,
+    edad: number
+}
+
+const personaHospital: Partial <Personal> = {
+    nombre: "Maria",
+    edad: 30
+}
+personaHospital.nombre = "Mary"
+console.log(personaHospital)
+
+const personaHospital2: Readonly<Personal> = {
+    id: 44,
+    nombre: "Jose",
+    edad: 30
+}
+console.log(personaHospital2)
+
+
+const personaHospital3: Pick<Personal, "nombre"> = {
+    nombre: "Rosa"
+}
+console.log(personaHospital3)
+
+const personaHospital4: Omit<Personal, "edad"> = {
+    id: 5,
+    nombre: "Rosa"
+}
+console.log(personaHospital4)
+
+// ? <--- OPtional chaining
+interface Producto {
+    nombre: string,
+    precio: number,
+    direccion: {
+        ciudad: string
+    }
+}
+
+const producto: Producto = {
+    nombre: "Raton",
+    precio: 25,
+    /* direccion: {
+        ciudad: "Vigo"
+    } */
+}
+// ? ---> Esto significa que si le dieron la direccion puede acceder a ella y si no se la dieron permite que se pueda continuar sin 
+// petar la app
+console.log(producto.direccion?.ciudad)
+
+
+// ?? <--- nulish coalescing
+let apellidos = null 
+
+/* if(apellidos === null) {
+    console.log("Tu apellido es: anónimo")
+} else {
+    console.log("Tu apellido es: " + apellidos)
+} */
+
+// Esto comprueba si es null o undefined
+console.log("Tu apellido es: " + (apellidos ?? "anónimo"))
+
+// Esto comprueba si es nullish (0, false, "", NaN, null, undefined)
+console.log("Tu apellido es: " + ( apellidos || "anonimo") )
+
+
+// Tipa correctamente el alumno. Tiene nombre, apellidos, notaMedia
+// Tiene datos de donde vive (ciudad, calle, estado) es opcional
+// Tiene rol (que puede ser Admin, User)
+// Muestra por pantalla la ciudad establecida
+// En caso de no tener ciudad establecida, muestra "Desconocido"
+// No tiene que haber errores de linter 
+
+interface Direccion {
+    ciudad: string,
+        calle: string,
+        estado: string
+}
+
+interface Alumno {
+    nombre: string,
+    apellidos: string,
+    notas: [number, number, number],
+    direccion?: Direccion,
+    rol: "Admin" | "User"
+}
+
+const alumnoManuel: Alumno = {
+    nombre: "Manuel",
+    apellidos: "Ruiz",
+    notas: [5, 8, 2],
+    rol: "Admin"
+}
+
+console.log(alumnoManuel.direccion?.calle ?? "Desconocido")
+/* const nota1 = alumnoManuel.notas[0]
+const nota2 = alumnoManuel.notas[1]
+const nota3 = alumnoManuel.notas[2] */
+
+const [nota1, nota2, nota3] = alumnoManuel.notas
+
+console.log(nota1, nota2, nota3)
