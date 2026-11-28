@@ -9,7 +9,7 @@ export function FA() {
         </div>
         <main>
             <ul className="p-4">
-                <li className="p-4"><strong className="text-orange-400">Vivienda e infraestructura:</strong> Es su eje central; propone crear 1,5 
+                <li className="p-4"><strong className="text-orange-400">Vivienda:</strong> Es su eje central; propone crear 1,5 
                     millones de viviendas públicas en alquiler asequible en 12 años, limitar los precios de alquiler en zonas tensionadas, prohibir
                     los desahucios sin alternativa habitacional y expropiar inmuebles a grandes propietarios corporativos.
                 </li>
